@@ -1,4 +1,3 @@
-// src/components/group/ExpenseList.js
 import { useState } from 'react';
 
 function ExpenseList({ expenses }) {

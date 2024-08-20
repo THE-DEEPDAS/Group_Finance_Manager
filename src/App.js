@@ -7,7 +7,7 @@ import AddGroup from './components/group/AddGroup';
 import AddExpense from './components/group/AddExpense';
 import GroupDetails from './pages/GroupDetails';
 import SplitBill from './pages/SplitBill';
-import NotFound from './pages/NotFound'; // Add a NotFound component for 404 errors
+import NotFound from './pages/NotFound';
 
 function App() {
     const [user, setUser] = useState(null);

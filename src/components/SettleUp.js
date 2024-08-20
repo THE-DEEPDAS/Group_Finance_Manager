@@ -1,4 +1,3 @@
-// src/components/SettleUp.js
 function SettleUp({ expenses, members }) {
     const totalAmount = expenses.reduce((sum, expense) => sum + expense.amount, 0);
     const amountPerPerson = totalAmount / members.length;

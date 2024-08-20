@@ -1,4 +1,3 @@
-// src/components/group/AddExpense.js
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
