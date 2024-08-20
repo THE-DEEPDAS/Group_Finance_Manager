@@ -11,7 +11,7 @@ function GroupDetails({ groups, setGroups }) {
     const id = parseInt(groupId, 10);
     const group = groups[id];
 
-    const [newExpense, setNewExpense] = useState({ description: '', amount: 0 });
+    const [newExpense, setNewExpense] = useState({ description: '', amount: 0, payer: '', splitType: 'equal', splitDetails: {} });
     const [membersToAdd, setMembersToAdd] = useState('');
     const [expenseToEdit, setExpenseToEdit] = useState(null);
 
@@ -20,14 +20,23 @@ function GroupDetails({ groups, setGroups }) {
     }
 
     const handleAddExpense = () => {
+        if (newExpense.splitType === 'unequal') {
+            const totalSplit = Object.values(newExpense.splitDetails).reduce((total, amount) => total + amount, 0);
+            if (totalSplit !== newExpense.amount) {
+                alert('Total of unequal splits must equal the expense amount.');
+                return;
+            }
+        }
+
         const updatedGroups = [...groups];
-        updatedGroups[id].expenses.push({
+        const expense = {
             id: Date.now(),
             ...newExpense,
             paid: false
-        });
+        };
+        updatedGroups[id].expenses.push(expense);
         setGroups(updatedGroups);
-        setNewExpense({ description: '', amount: 0 });
+        setNewExpense({ description: '', amount: 0, payer: '', splitType: 'equal', splitDetails: {} });
     };
 
     const handleAddMember = () => {
@@ -69,7 +78,11 @@ function GroupDetails({ groups, setGroups }) {
     const individualSpending = group.members.reduce((acc, member) => {
         acc[member] = group.expenses.reduce((total, expense) => {
             if (!expense.paid) {
-                return total + (expense.amount / group.members.length);
+                if (expense.splitType === 'equal') {
+                    return total + (expense.amount / group.members.length);
+                } else if (expense.splitDetails[member]) {
+                    return total + expense.splitDetails[member];
+                }
             }
             return total;
         }, 0);
@@ -134,16 +147,53 @@ function GroupDetails({ groups, setGroups }) {
             />
             <input
                 type="number"
-                placeholder="Amount"
+                placeholder="Amount (₹)"
                 value={newExpense.amount}
                 onChange={(e) => setNewExpense({ ...newExpense, amount: parseFloat(e.target.value) })}
             />
+            <select
+                value={newExpense.payer}
+                onChange={(e) => setNewExpense({ ...newExpense, payer: e.target.value })}
+            >
+                <option value="">Select Payer</option>
+                {group.members.map(member => (
+                    <option key={member} value={member}>{member}</option>
+                ))}
+            </select>
+            <select
+                value={newExpense.splitType}
+                onChange={(e) => setNewExpense({ ...newExpense, splitType: e.target.value })}
+            >
+                <option value="equal">Split Equally</option>
+                <option value="unequal">Split Unequally</option>
+            </select>
+            {newExpense.splitType === 'unequal' && (
+                <div>
+                    {group.members.map(member => (
+                        <div key={member}>
+                            <label>{member}</label>
+                            <input
+                                type="number"
+                                placeholder="Amount (₹)"
+                                value={newExpense.splitDetails[member] || ''}
+                                onChange={(e) => setNewExpense({
+                                    ...newExpense,
+                                    splitDetails: {
+                                        ...newExpense.splitDetails,
+                                        [member]: parseFloat(e.target.value) || 0
+                                    }
+                                })}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
             <button onClick={handleAddExpense}>Add Expense</button>
             <h3>Expenses</h3>
             <ul>
                 {group.expenses.map((expense) => (
                     <li key={expense.id}>
-                        {expense.description}: ${expense.amount}
+                        {expense.description}: ₹{expense.amount} (Paid by: {expense.payer})
                         {!expense.paid && (
                             <>
                                 <button onClick={() => handleEditExpense(expense)}>Edit</button>

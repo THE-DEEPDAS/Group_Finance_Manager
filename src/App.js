@@ -1,4 +1,3 @@
-// src/App.js
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import Login from './components/auth/Login';
@@ -16,9 +15,9 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={user ? <Dashboard groups={groups} /> : <Login setUser={setUser} />} />
+                <Route path="/" element={user ? <Dashboard groups={groups} setUser={setUser} /> : <Login setUser={setUser} />} />
                 <Route path="/signup" element={<Signup setUser={setUser} />} />
-                <Route path="/dashboard" element={user ? <Dashboard groups={groups} /> : <Login setUser={setUser} />} />
+                <Route path="/dashboard" element={user ? <Dashboard groups={groups} setUser={setUser} /> : <Login setUser={setUser} />} />
                 <Route path="/add-group" element={user ? <AddGroup groups={groups} setGroups={setGroups} /> : <Login setUser={setUser} />} />
                 <Route path="/add-expense/:groupId" element={user ? <AddExpense groups={groups} setGroups={setGroups} /> : <Login setUser={setUser} />} />
                 <Route path="/group/:groupId" element={user ? <GroupDetails groups={groups} setGroups={setGroups} /> : <Login setUser={setUser} />} />

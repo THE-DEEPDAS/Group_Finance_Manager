@@ -4,13 +4,17 @@ import { useNavigate } from 'react-router-dom';
 function Login({ setUser }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        if (email && password) {
-            // Simulate login
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+
+        if (storedUser && email === storedUser.email && password === storedUser.password) {
             setUser({ email });
             navigate('/dashboard');
+        } else {
+            setMessage('Invalid email or password. Please sign up.');
         }
     };
 
@@ -30,7 +34,8 @@ function Login({ setUser }) {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <button onClick={handleLogin}>Login</button>
-            <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+            {message && <p>{message}</p>}
+            <p>Don't have an account? <button onClick={() => navigate('/signup')}>Sign Up</button></p>
         </div>
     );
 }

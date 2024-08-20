@@ -5,13 +5,19 @@ function Signup({ setUser }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const handleSignup = () => {
         if (email && password && password === confirmPassword) {
-            // Simulate signup
+            // Simulate signup by saving to localStorage
+            localStorage.setItem('user', JSON.stringify({ email, password }));
             setUser({ email });
-            navigate('/dashboard');
+            setMessage('Signup successful!');
+            // Optionally, you can redirect after a short delay
+            setTimeout(() => navigate('/login'), 2000);
+        } else {
+            setMessage('Passwords do not match or fields are empty.');
         }
     };
 
@@ -37,6 +43,8 @@ function Signup({ setUser }) {
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <button onClick={handleSignup}>Sign Up</button>
+            {message && <p>{message}</p>}
+            <p>Already have an account? <button onClick={() => navigate('/login')}>Login</button></p>
         </div>
     );
 }

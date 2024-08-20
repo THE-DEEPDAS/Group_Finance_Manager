@@ -1,9 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-function Dashboard({ groups }) {
+function Dashboard({ groups, setUser }) {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        // Clear user state
+        setUser(null);
+        // Redirect to login page
+        navigate('/');
+    };
+
     return (
         <div>
             <h2>Dashboard</h2>
+            <button onClick={handleLogout}>Logout</button>
             <Link to="/add-group">Create New Group</Link>
             <h3>Groups</h3>
             {groups.length === 0 ? (
@@ -18,7 +28,7 @@ function Dashboard({ groups }) {
                             <ul>
                                 {group.expenses.map((expense, expIndex) => (
                                     <li key={expIndex}>
-                                        {expense.description}: ${expense.amount}
+                                        {expense.description}: ₹{expense.amount.toFixed(2)}
                                     </li>
                                 ))}
                             </ul>
