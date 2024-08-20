@@ -15,6 +15,7 @@ function Auth({ setUser }) {
             localStorage.setItem('user', JSON.stringify({ email, password }));
             setUser({ email });
             setMessage('Signup successful! Redirecting to login...');
+            // Redirect to login immediately after a successful signup
             setTimeout(() => navigate('/login'), 2000);
         } else {
             setMessage('Passwords do not match or fields are empty.');
