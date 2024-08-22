@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-  // Import global styles
 
-function AddGroup() {
+function AddGroup({ groups, setGroups }) {
     const [groupName, setGroupName] = useState('');
     const [members, setMembers] = useState(['']);
     const navigate = useNavigate();
@@ -16,17 +15,15 @@ function AddGroup() {
 
     const handleCreateGroup = () => {
         if (groupName && members.length > 0) {
-            const storedGroups = JSON.parse(localStorage.getItem('groups')) || [];
-            const newGroups = [...storedGroups, { name: groupName, members, expenses: [] }];
-            localStorage.setItem('groups', JSON.stringify(newGroups));
-            console.log('Saved Groups:', newGroups); // Debugging log
+            setGroups([...groups, { name: groupName, members, expenses: [] }]);
             navigate('/dashboard');
         }
     };
-    
+
     return (
-        <div className="form-container">
-            <h2>Create New Group</h2>
+        <div className='container'>
+            <div className='content'>
+            <h2 style={{color:'white',textAlign:'center'}}>Create New Group</h2>
             <input
                 type="text"
                 placeholder="Group Name"
@@ -42,8 +39,9 @@ function AddGroup() {
                     onChange={(e) => handleMemberChange(index, e.target.value)}
                 />
             ))}
-            <button onClick={handleAddMember}>Add Member</button>
-            <button onClick={handleCreateGroup}>Create Group</button>
+            <button class="login-buttons" onClick={handleAddMember}>Add Member</button>
+            <button class="login-buttons" onClick={handleCreateGroup}>Create Group</button>
+        </div>
         </div>
     );
 }

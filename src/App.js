@@ -8,7 +8,7 @@ import AddExpense from './components/group/AddExpense';
 import GroupDetails from './pages/GroupDetails';
 import SplitBill from './pages/SplitBill';
 import NotFound from './pages/NotFound';
-import Navbar from './components/layout/Navbar'; 
+import Navbar from './components/layout/Navbar'; // Import Navbar component
 
 function App() {
     const [user, setUser] = useState(null);

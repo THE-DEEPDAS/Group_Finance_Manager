@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-  // Import global styles
+import './login.css'
 
 function Login({ setUser }) {
     const [email, setEmail] = useState('');
@@ -20,24 +20,26 @@ function Login({ setUser }) {
     };
 
     return (
-        <div className="form-container">
+       <div class="login-container">
+             <div className="auth-form"> 
             <h2>Login</h2>
-            <input
+            <input class= "input-filled-form"
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <input
+            <input class= "input-filled-form"
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleLogin}>Login</button>
+            <button onClick={handleLogin} class="login-buttons">Login</button>
             {message && <p>{message}</p>}
-            <p>Don't have an account? <button onClick={() => navigate('/signup')}>Sign Up</button></p>
+            <p id='dont-account'>Don't have an account? <button onClick={() => navigate('/signup')} class="login-buttons">Sign Up</button></p>
         </div>
+       </div>
     );
 }
 

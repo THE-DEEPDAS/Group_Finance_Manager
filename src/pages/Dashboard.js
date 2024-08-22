@@ -1,31 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-  // Import global styles
+import './dashboard.css';
 
-function Dashboard({ setUser }) {
+function Dashboard({ groups, setUser }) {
     const navigate = useNavigate();
-    const [groups, setGroups] = useState([]);
-
-    useEffect(() => {
-        try {
-            const storedGroups = localStorage.getItem('groups');
-            if (storedGroups) {
-                const parsedGroups = JSON.parse(storedGroups);
-                if (Array.isArray(parsedGroups)) {
-                    setGroups(parsedGroups);
-                } else {
-                    setGroups([]); // Set empty array if data is not in expected format
-                }
-            } else {
-                setGroups([]); // Set empty array if no data found
-            }
-        } catch (error) {
-            console.error('Error parsing groups from localStorage:', error);
-            setGroups([]); // Set empty array in case of error
-        }
-    }, []);
-    
-    
 
     const handleLogout = () => {
         // Clear user state
@@ -35,18 +12,19 @@ function Dashboard({ setUser }) {
     };
 
     return (
-        <div className="dashboard">
-            <h2>Dashboard</h2>
-            <button onClick={handleLogout}>Logout</button>
-            <Link to="/add-group">Create New Group</Link>
-            <h3>Groups</h3>
+        <div className="dashboard-container">
+            <div className='dashboard-content'>
+            <div id='dashboard-heading'> <h2>Dashboard</h2></div>
+            
+            <Link to="/add-group" id='create-newgrp'>Create New Group</Link>
+            <h3 style={{color:"white",marginBottom:"1px"}}> Your Groups</h3>
             {groups.length === 0 ? (
-                <p>No groups available. Create a new group!</p>
+                <p style={{textAlign:'center',color:'white'}}>No groups available. Create a new group!</p>
             ) : (
                 <ul>
                     {groups.map((group, index) => (
-                        <li key={index} className="group-card">
-                            <Link to={`/group/${index}`}>
+                        <li key={index}>
+                            <Link to={`/group/${index}`} id='grp-name'>
                                 {group.name}
                             </Link>
                             <ul>
@@ -60,6 +38,8 @@ function Dashboard({ setUser }) {
                     ))}
                 </ul>
             )}
+            <button onClick={handleLogout} className='logout-button'>Logout</button>
+        </div>
         </div>
     );
 }

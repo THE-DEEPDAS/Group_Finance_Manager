@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-  // Import global styles
+import './signup.css';
 
 function Signup({ setUser }) {
     const [email, setEmail] = useState('');
@@ -23,29 +23,34 @@ function Signup({ setUser }) {
     };
 
     return (
-        <div className="form-container">
+        <div class="login-container">
+            <div className="auth-form">
             <h2>Sign Up</h2>
             <input
+                class= "input-filled-form"
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
             <input
+                class= "input-filled-form"
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
             <input
+                class= "input-filled-form"
                 type="password"
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <button onClick={handleSignup}>Sign Up</button>
+            <button onClick={handleSignup}  class="login-buttons">Sign Up</button>
             {message && <p>{message}</p>}
-            <p>Already have an account? <button onClick={() => navigate('/login')}>Login</button></p>
+            <p id='dont-account'>Already have an account? <button   class="login-buttons" onClick={() => navigate('/login')}>Login</button></p>
+        </div>
         </div>
     );
 }

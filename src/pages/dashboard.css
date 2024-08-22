@@ -1,0 +1,75 @@
+body{
+    background-image: url("https://img.freepik.com/free-vector/black-faded-gradient-background-vector-with-blue-border_53876-125750.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.dashboard-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10em;
+    width: 100%;
+    height: 100%;
+    /* margin-bottom: 300px; */
+    margin-top: 75px;
+    
+
+}
+.dashboard-content{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 30%;
+    gap: 10px;
+    background: rgba(97, 96, 96, 0.49);
+    padding: 2em;
+    border-radius: 10px;
+}
+.dashboard-content h2,h3{
+    color: white;
+    font-weight: 200;
+    text-align: center;
+}
+.logout-button{
+    border-radius: .25rem;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 400;
+    padding-left: 25px;
+    padding-right: 25px;
+    color: #fff;
+    -webkit-clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+    clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+    height: 35px;
+    font-size: 0.7rem;
+    line-height: 14px;
+    letter-spacing: 1.2px;
+    transition: .2s .1s;
+    background-image: linear-gradient(90deg,#1c1c1c,#029ff4);
+    border: 0 solid;
+    overflow: hidden;
+  }
+  
+.logout-button:hover {
+    cursor: pointer;
+    transition: all .3s ease-in;
+    padding-right: 30px;
+    padding-left: 30px;
+   
+  }
+#create-newgrp{
+    color: rgb(106, 215, 237);
+    text-align: center;
+}
+#pop-up-message{
+    color: white;
+}
+#dashboard-heading{
+    background-color: rgb(106, 215, 237,.0.5);
+}
+#grp-name{
+    color: rgb(106, 215, 237);
+}
