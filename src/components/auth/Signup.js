@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './global.css'; // Import global styles
 
 function Signup({ setUser }) {
     const [email, setEmail] = useState('');
@@ -22,7 +23,7 @@ function Signup({ setUser }) {
     };
 
     return (
-        <div className="auth-form">
+        <div className="form-container">
             <h2>Sign Up</h2>
             <input
                 type="email"

@@ -12,7 +12,7 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="navbar-container">
                 <div className="navbar-header">
-                    <a href="#" className="navbar-brand">Resource Section</a>
+                    <a href="#" className="navbar-brand">Split Smart</a>
                 </div>
                 <div className="navbar-toggle" onClick={toggleDropdown}>
                     <span className="bar"></span>

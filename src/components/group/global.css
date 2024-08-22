@@ -1,0 +1,153 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('back_img.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text-color);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--header-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: var(--text-color);
+    padding: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: var(--primary-color);
+}
+
+/* Form Styles */
+.form-container {
+    background: var(--header-color);
+    padding: 40px;
+    margin: 100px auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+.form-container input,
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.form-container button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Dashboard & Group Details */
+.dashboard {
+    padding: 60px 20px;
+}
+
+.group-card {
+    background: var(--header-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.group-card:hover {
+    transform: translateY(-5px);
+}
+
+.group-card h3 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+.group-details {
+    padding: 60px 20px;
+}
+
+.group-details h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.group-details .section {
+    margin-bottom: 20px;
+}
+
+.group-details .section h3 {
+    font-size: 22px;
+    color: var(--text-color);
+}
+
+/* NotFound Page */
+.notfound {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.notfound h1 {
+    font-size: 48px;
+    color: #e74c3c;
+}
+
+.notfound p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.notfound a {
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: bold;
+}

@@ -1,7 +1,31 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import './global.css'; // Import global styles
 
-function Dashboard({ groups, setUser }) {
+function Dashboard({ setUser }) {
     const navigate = useNavigate();
+    const [groups, setGroups] = useState([]);
+
+    useEffect(() => {
+        try {
+            const storedGroups = localStorage.getItem('groups');
+            if (storedGroups) {
+                const parsedGroups = JSON.parse(storedGroups);
+                if (Array.isArray(parsedGroups)) {
+                    setGroups(parsedGroups);
+                } else {
+                    setGroups([]); // Set empty array if data is not in expected format
+                }
+            } else {
+                setGroups([]); // Set empty array if no data found
+            }
+        } catch (error) {
+            console.error('Error parsing groups from localStorage:', error);
+            setGroups([]); // Set empty array in case of error
+        }
+    }, []);
+    
+    
 
     const handleLogout = () => {
         // Clear user state
@@ -11,7 +35,7 @@ function Dashboard({ groups, setUser }) {
     };
 
     return (
-        <div>
+        <div className="dashboard">
             <h2>Dashboard</h2>
             <button onClick={handleLogout}>Logout</button>
             <Link to="/add-group">Create New Group</Link>
@@ -21,7 +45,7 @@ function Dashboard({ groups, setUser }) {
             ) : (
                 <ul>
                     {groups.map((group, index) => (
-                        <li key={index}>
+                        <li key={index} className="group-card">
                             <Link to={`/group/${index}`}>
                                 {group.name}
                             </Link>

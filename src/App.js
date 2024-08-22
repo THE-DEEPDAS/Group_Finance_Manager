@@ -1,3 +1,4 @@
+import './Global.css'; 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import Login from './components/auth/Login';
@@ -8,7 +9,7 @@ import AddExpense from './components/group/AddExpense';
 import GroupDetails from './pages/GroupDetails';
 import SplitBill from './pages/SplitBill';
 import NotFound from './pages/NotFound';
-import Navbar from './components/layout/Navbar'; // Import Navbar component
+import Navbar from './components/layout/Navbar'; 
 
 function App() {
     const [user, setUser] = useState(null);
