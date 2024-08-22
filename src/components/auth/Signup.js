@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './global.css'; // Import global styles
+  // Import global styles
 
 function Signup({ setUser }) {
     const [email, setEmail] = useState('');

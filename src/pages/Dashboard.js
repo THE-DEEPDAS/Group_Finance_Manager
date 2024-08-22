@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import './global.css'; // Import global styles
+  // Import global styles
 
 function Dashboard({ setUser }) {
     const navigate = useNavigate();
