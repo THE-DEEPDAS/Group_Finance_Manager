@@ -19,24 +19,17 @@ function GroupDetails({ groups, setGroups }) {
         return <div>Group not found!</div>;
     }
 
-    const handleAddExpense = () => {
-        if (newExpense.splitType === 'unequal') {
-            const totalSplit = Object.values(newExpense.splitDetails).reduce((total, amount) => total + amount, 0);
-            if (totalSplit !== newExpense.amount) {
-                alert('Total of unequal splits must equal the expense amount.');
-                return;
-            }
-        }
-
+    const handleAddExpense = (type) => {
         const updatedGroups = [...groups];
         const expense = {
             id: Date.now(),
             ...newExpense,
-            paid: false
+            type: type,
+            amount: type === 'spend' ? -Math.abs(newExpense.amount) : Math.abs(newExpense.amount)
         };
         updatedGroups[id].expenses.push(expense);
         setGroups(updatedGroups);
-        setNewExpense({ description: '', amount: 0, payer: '', splitType: 'equal', splitDetails: {} });
+        setNewExpense({ description: '', amount: 0, type: '' });
     };
 
     const handleAddMember = () => {
@@ -101,12 +94,12 @@ function GroupDetails({ groups, setGroups }) {
     };
 
     const dataForGroupSpending = {
-        labels: group.expenses.map(exp => exp.description),
+        labels: group.expenses.map(exp => exp.description || new Date(exp.id).toLocaleDateString()),
         datasets: [{
-            label: 'Group Spending',
+            label: 'Transaction Amounts',
             data: group.expenses.map(exp => exp.amount),
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-            borderColor: 'rgba(153, 102, 255, 1)',
+            backgroundColor: exp => exp.type === 'gain' ? 'rgba(75, 192, 192, 0.6)' : 'rgba(255, 99, 132, 0.6)',
+            borderColor: exp => exp.type === 'gain' ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)',
             borderWidth: 1
         }]
     };
@@ -122,37 +115,69 @@ function GroupDetails({ groups, setGroups }) {
         }]
     };
 
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    color: 'black'
+                }
+            },
+            title: {
+                display: true,
+                text: 'Transaction Amounts',
+                color: 'black'
+            }
+        },
+        scales: {
+            x: {
+                ticks: { color: 'black' },
+                grid: { color: 'rgba(0, 0, 0, 0.1)' }
+            },
+            y: {
+                ticks: { color: 'black' },
+                grid: { color: 'rgba(0, 0, 0, 0.1)' }
+            }
+        }
+    };
+
     return (
-    <div className='container'>
-        <div className='group-details'>
-            <h2 style={{color:"white"}}>{group.name}</h2>
-            <h3 style={{color:"whitesmoke"}}>Members</h3>
-            <ul>
+        <div className='gd-container'>
+            <h2 className='gd-heading'>{group.name}</h2>
+            <h3 className='gd-subheading'>Members</h3>
+            <ul className='gd-list'>
                 {group.members.map((member, index) => (
-                    <li style={{color:"white"}} key={index}>{member}</li>
+                    <li key={index} className='gd-list-item'>{member}</li>
                 ))}
             </ul>
             <input
+                className='gd-input'
                 type="text"
                 placeholder="Add new member"
                 value={membersToAdd}
                 onChange={(e) => setMembersToAdd(e.target.value)}
             />
-            <button className="button" onClick={handleAddMember}>Add Member</button>
-            <h3 style={{color:"white"}}>Add New Expense</h3>
+            <button className="gd-button" onClick={handleAddMember}>Add Member</button>
+            <h3 className='gd-subheading'>Add New Expense</h3>
             <input
+                className='gd-input'
                 type="text"
                 placeholder="Description"
                 value={newExpense.description}
                 onChange={(e) => setNewExpense({ ...newExpense, description: e.target.value })}
             />
             <input
+                className='gd-input'
                 type="number"
                 placeholder="Amount (₹)"
                 value={newExpense.amount}
                 onChange={(e) => setNewExpense({ ...newExpense, amount: parseFloat(e.target.value) })}
             />
             <select
+                className='gd-select'
                 value={newExpense.payer}
                 onChange={(e) => setNewExpense({ ...newExpense, payer: e.target.value })}
             >
@@ -162,6 +187,7 @@ function GroupDetails({ groups, setGroups }) {
                 ))}
             </select>
             <select
+                className='gd-select'
                 value={newExpense.splitType}
                 onChange={(e) => setNewExpense({ ...newExpense, splitType: e.target.value })}
             >
@@ -174,6 +200,7 @@ function GroupDetails({ groups, setGroups }) {
                         <div key={member}>
                             <label>{member}</label>
                             <input
+                                className='gd-input'
                                 type="number"
                                 placeholder="Amount (₹)"
                                 value={newExpense.splitDetails[member] || ''}
@@ -189,17 +216,17 @@ function GroupDetails({ groups, setGroups }) {
                     ))}
                 </div>
             )}
-            <button onClick={handleAddExpense}>Add Expense</button>
-            <h3 style={{color:"white"}}>Expenses</h3>
-            <ul>
+            <button className="gd-button" onClick={handleAddExpense}>Add Expense</button>
+            <h3 className='gd-subheading'>Expenses</h3>
+            <ul className='gd-list'>
                 {group.expenses.map((expense) => (
-                    <li style={{color:"white"}} key={expense.id}>
+                    <li key={expense.id} className='gd-list-item'>
                         {expense.description}: ₹{expense.amount} (Paid by: {expense.payer})
                         {!expense.paid && (
                             <>
-                                <button onClick={() => handleEditExpense(expense)}>Edit</button>
-                                <button onClick={() => handleDeleteExpense(expense.id)}>Delete</button>
-                                <button onClick={() => handleMarkAsPaid(expense.id)}>Mark as Paid</button>
+                                <button className="gd-button" onClick={() => handleEditExpense(expense)}>Edit</button>
+                                <button className="gd-button" onClick={() => handleDeleteExpense(expense.id)}>Delete</button>
+                                <button className="gd-button" onClick={() => handleMarkAsPaid(expense.id)}>Mark as Paid</button>
                             </>
                         )}
                     </li>
@@ -212,20 +239,19 @@ function GroupDetails({ groups, setGroups }) {
                     onCancel={() => setExpenseToEdit(null)}
                 />
             )}
-            <h3 style={{color:'white'}}>Charts</h3>
-            <div>
-                <h4 style={{color:"white"}}>Individual Spending</h4>
-                <Bar data={dataForIndividualSpending} />
+            <h3 className='gd-subheading'>Charts</h3>
+            <div className='gd-chart-container'>
+                <h4 className='gd-chart-title'>Individual Spending</h4>
+                <Bar data={dataForIndividualSpending} options={chartOptions} />
             </div>
-            <div>
-                <h4 style={{color:"white"}}>Group Spending Distribution</h4>
-                <Pie data={dataForGroupSpending} />
+            <div className='gd-chart-container'>
+                <h4 className='gd-chart-title'>Group Spending Distribution</h4>
+                <Pie data={dataForGroupSpending} options={chartOptions} />
             </div>
-            <div>
-                <h4 style={{color:"white"}}>Spending Trends</h4>
-                <Line data={dataForSpendingTrends} />
+            <div className='gd-chart-container'>
+                <h4 className='gd-chart-title'>Spending Trends</h4>
+                <Line data={dataForSpendingTrends} options={chartOptions} />
             </div>
-        </div>
         </div>
     );
 }
@@ -242,17 +268,19 @@ function EditExpenseForm({ expense, onSave, onCancel }) {
         <div className="edit-expense-form">
             <h3>Edit Expense</h3>
             <input
+                className='gd-input'
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
             />
             <input
+                className='gd-input'
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
             />
-            <button onClick={handleSave}>Save</button>
-            <button onClick={onCancel}>Cancel</button>
+            <button className="gd-button" onClick={handleSave}>Save</button>
+            <button className="gd-button" onClick={onCancel}>Cancel</button>
         </div>
     );
 }

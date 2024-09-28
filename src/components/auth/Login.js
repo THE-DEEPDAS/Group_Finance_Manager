@@ -15,6 +15,7 @@ function Login({ setUser }) {
             setUser({ email });
             navigate('/dashboard');
         } else {
+            
             setMessage('Invalid email or password. Please sign up.');
         }
     };
@@ -36,7 +37,7 @@ function Login({ setUser }) {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <button onClick={handleLogin} class="login-buttons">Login</button>
-            {message && <p>{message}</p>}
+            {message && <p id='dont-account'>{message} </p>}
             <p id='dont-account'>Don't have an account? <button onClick={() => navigate('/signup')} class="login-buttons">Sign Up</button></p>
         </div>
        </div>

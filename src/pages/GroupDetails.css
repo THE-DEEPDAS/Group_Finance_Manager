@@ -1,63 +1,106 @@
-
-
-.group-details {
-    padding: 20px;
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: white;
     font-family: Arial, sans-serif;
-    background-color: rgba(27, 28, 89, 0.25);
 }
 
-.group-details h2 {
-    color: #333;
+.gd-container {
+    background-color: #1a1a1a;
+    color: white;
+    min-height: 100vh;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
-.group-details h3 {
-    color: #555;
+.gd-heading {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.group-details ul {
+.gd-subheading {
+    color: #00a8e8;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.gd-list {
     list-style-type: none;
     padding: 0;
 }
 
-.group-details li {
-    margin: 5px 0;
+.gd-list-item {
+    background-color: #2a2a2a;
+    color: white;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-/* From Uiverse.io by niat786 */ 
-button {
-    border-radius: .25rem;
-    text-transform: uppercase;
-    font-style: normal;
-    font-weight: 400;
-    padding-left: 25px;
-    padding-right: 25px;
-    color: #fff;
-    -webkit-clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
-    clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
-    height: 40px;
-    font-size: 0.7rem;
-    line-height: 14px;
-    letter-spacing: 1.2px;
-    transition: .2s .1s;
-    background-image: linear-gradient(90deg,#1c1c1c,#029ff4);
-    border: 0 solid;
-    overflow: hidden;
-  }
-  
-  button:hover {
+.gd-input, .gd-select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: white;
+}
+
+.gd-button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
     cursor: pointer;
-    transition: all .3s ease-in;
-    padding-right: 30px;
-    padding-left: 30px;
-  }
+    transition: background-color 0.3s;
+    background: linear-gradient(to right, #0077be, #00a8e8);
+}
+
+.gd-button:hover {
+    opacity: 0.8;
+}
+
+.gd-chart-container {
+    margin-top: 20px;
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 5px;
+    max-width: 600px;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gd-chart-title {
+    color: #00a8e8;
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-align: center;
+}
 
 .edit-expense-form {
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 5px;
     margin-top: 20px;
 }
 
-.edit-expense-form input {
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+@media (max-width: 768px) {
+    .gd-container {
+        margin: 10px;
+        padding: 10px;
+    }
+    
+    .gd-chart-container {
+        height: 250px;
+    }
 }

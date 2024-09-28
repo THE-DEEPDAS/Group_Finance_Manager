@@ -48,7 +48,7 @@ function Signup({ setUser }) {
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <button onClick={handleSignup}  class="login-buttons">Sign Up</button>
-            {message && <p>{message}</p>}
+            {message && <p id='dont-account'>{message}</p>}
             <p id='dont-account'>Already have an account? <button   class="login-buttons" onClick={() => navigate('/login')}>Login</button></p>
         </div>
         </div>
