@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import Dashboard from './pages/Dashboard';
@@ -14,13 +14,24 @@ function App() {
     const [user, setUser] = useState(null);
     const [groups, setGroups] = useState([]);
 
+    useEffect(() => {
+        const storedGroups = localStorage.getItem('groups');
+        if (storedGroups) {
+            setGroups(JSON.parse(storedGroups));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('groups', JSON.stringify(groups));
+    }, [groups]);
+
     return (
         <Router>
             <Navbar /> {/* Include Navbar component */}
             <Routes>
                 <Route 
                     path="/" 
-                    element={user ? <Dashboard groups={groups} setUser={setUser} /> : <Navigate to="/login" />} 
+                    element={user ? <Dashboard user={user} setUser={setUser} groups={groups} setGroups={setGroups} /> : <Navigate to="/login" />} 
                 />
                 <Route 
                     path="/signup" 
@@ -32,7 +43,7 @@ function App() {
                 />
                 <Route 
                     path="/dashboard" 
-                    element={user ? <Dashboard groups={groups} setUser={setUser} /> : <Navigate to="/login" />} 
+                    element={user ? <Dashboard user={user} setUser={setUser} groups={groups} setGroups={setGroups} /> : <Navigate to="/login" />} 
                 />
                 <Route 
                     path="/add-group" 
@@ -48,7 +59,7 @@ function App() {
                 />
                 <Route 
                     path="/split-bill/:groupId" 
-                    element={user ? <SplitBill groups={groups} /> : <Navigate to="/login" />} 
+                    element={user ? <SplitBill groups={groups} setGroups={setGroups} /> : <Navigate to="/login" />} 
                 />
                 <Route 
                     path="*" 
